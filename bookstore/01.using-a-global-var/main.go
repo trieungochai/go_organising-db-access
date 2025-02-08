@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/trieungochai/go_organising-db-access/models"
+	"github.com/trieungochai/go_organising-db-access/01.using-a-global-var/models"
 )
 
 func main() {
