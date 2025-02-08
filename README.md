@@ -28,3 +28,18 @@ The drawbacks of using global variables are [well-documented](https://softwareen
 For more complex applications — where your handlers have more dependencies beyond just the database connection pool — it's generally better to use dependency injection instead of storing everything in global variables.
 
 The approach we've taken here also doesn't work if your database logic is spread over multiple packages, although — if you really want to — you could a separate `config` package containing an exported `DB` global variable and `import "yourproject/config"` into every file that needs it.
+
+---
+### 2. Dependency injection
+In a more complex web application there are probably additional application-level objects that you want your handlers to have access to. For example, you might want your handlers to also have access to a shared logger, or a template cache, as well your database connection pool.
+
+Rather than storing all these dependencies in global variables, a neat approach is to store them in a single custom `Env struct` like so:
+```go
+type Env struct {
+    db *sql.DB
+    logger *log.Logger
+    templates *template.Template
+}
+```
+
+The nice thing about this is that you can then define your handlers as methods against `Env`. This gives you a easy and idiomatic way of making the connection pool (and any other dependencies) available to your handlers.
