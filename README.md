@@ -43,3 +43,8 @@ type Env struct {
 ```
 
 The nice thing about this is that you can then define your handlers as methods against `Env`. This gives you a easy and idiomatic way of making the connection pool (and any other dependencies) available to your handlers.
+
+In general, dependency injection in this way is quite a nice approach when:
+- There is a common set of dependencies that your handlers need access to.
+- All your HTTP handlers live in one package, but your database-related code may be spread across multiple packages.
+- You don't need to mock the database for testing purposes.
