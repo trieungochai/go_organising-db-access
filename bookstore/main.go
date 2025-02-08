@@ -1,14 +1,12 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
 	"github.com/trieungochai/go_organising-db-access/models"
 )
 
@@ -23,8 +21,8 @@ func main() {
 		log.Fatal("DB_URL env variable is not set")
 	}
 
-	// Initializing the Database Connection
-	models.DB, err = sql.Open("postgres", dsn)
+	// Use the InitDB function to initialise the global variable.
+	err = models.Init(dsn)
 	if err != nil {
 		log.Fatal(err)
 	}

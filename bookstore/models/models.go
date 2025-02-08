@@ -1,11 +1,25 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
 
-// A global variable DB of type *sql.DB is declared to hold the db connection pool.
-// This allows different parts of the app to use the same db connection
-// without having to create new ones.
-var DB *sql.DB
+	_ "github.com/lib/pq"
+)
+
+// This time the global variable is unexported.
+var db *sql.DB
+
+// InitDB sets up setting up the connection pool global variable.
+func Init(dataSourceName string) error {
+	var err error
+	db, err = sql.Open("postgres", dataSourceName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return db.Ping()
+}
 
 // The Book struct represents a book entity
 type Book struct {
@@ -17,7 +31,7 @@ type Book struct {
 
 func AllBooks() ([]Book, error) {
 	// a. Querying the Database
-	rows, err := DB.Query("SELECT * FROM books")
+	rows, err := db.Query("SELECT * FROM books")
 	if err != nil {
 		return nil, err
 	}
