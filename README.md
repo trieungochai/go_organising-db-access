@@ -44,6 +44,10 @@ type Env struct {
 
 The nice thing about this is that you can then define your handlers as methods against `Env`. This gives you a easy and idiomatic way of making the connection pool (and any other dependencies) available to your handlers.
 
+One of the advantages of this pattern is how clear it is to see <u>what dependencies our handlers have</u> and <u>what values they take at runtime</u>. All the dependencies for our handlers are explicitly defined in one place (the `Env` struct), and we can see what values they have at runtime by simply looking at how it is initialised in the `main()` function.
+
+Another benefit is that any unit tests for our handlers can be completely self-contained.
+
 In general, dependency injection in this way is quite a nice approach when:
 - There is a common set of dependencies that your handlers need access to.
 - All your HTTP handlers live in one package, but your database-related code may be spread across multiple packages.
