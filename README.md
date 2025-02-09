@@ -52,3 +52,10 @@ In general, dependency injection in this way is quite a nice approach when:
 - There is a common set of dependencies that your handlers need access to.
 - All your HTTP handlers live in one package, but your database-related code may be spread across multiple packages.
 - You don't need to mock the database for testing purposes.
+
+---
+### 3. Wrapping the connection pool
+Wrapping the connection pool with a custom type and combining it with dependency injection via an Env struct is quite a nice approach when:
+- There is a common set of dependencies that your handlers need access to.
+- Your database layer has more dependencies than just the connection pool.
+- You want to mock the database during unit tests.
